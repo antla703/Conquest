@@ -16,20 +16,39 @@ public class Board
     private List<BoardListener> listenerList;
     private boolean gameOver = false;
     //private CollisionHandler collisionHandler = new DefaultCollisionHandler();
-    private int width;
-    private int height;
+    private int width = DEFAULT_WIDTH;
+    private int height = DEFAULT_WIDTH;
 
-    public Board(int width, int height) {
-	this.width = width;
-	this.height = height;
-        squares = new SquareType[width][height];
+    static final int DEFAULT_WIDTH = 9;
+    static final int DEFAULT_HEIGHT = 9;
+
+    public Board(int mode) {
+        switch(mode){
+            case 1:
+                break;
+            default:
+                this.width = DEFAULT_WIDTH;
+                this.height = DEFAULT_HEIGHT;
+                break;
+        }
+        this.squares = new SquareType[width][height];
         listenerList = new ArrayList<BoardListener>();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-		squares[i][j] = SquareType.EMPTY;
-                }
+                setSquareType(i, j, SquareType.EMPTY);
             }
+        }
+        spawnUnits(mode);
 	this.notifyListeners();
+    }
+
+    private void spawnUnits(int mode){
+        switch(mode){
+            case 1:
+                break;
+            default:
+                
+        }
     }
 
     public int getWidth() {
@@ -104,12 +123,23 @@ public class Board
     }
 
     private void clearBoard() {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        for (int i = 0; i < this.width; i++) {
+            for (int j = 0; j < this.height; j++) {
 		squares[i][j] = SquareType.EMPTY;
             }
         }
         this.notifyListeners();
+    }
+
+    private void resetBoard() {
+        for (int i = 0; i < this.width; i++) {
+            for (int j = 0; j < this.height; j++) {
+		switch(i){
+                    case 0:
+
+                }
+            }
+        }
     }
 
     public void updateBoard() {

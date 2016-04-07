@@ -10,7 +10,7 @@ public class ConquestComponent extends JComponent implements BoardListener
     private Board board;
     private AbstractMap<SquareType, Color> colorMap;
 
-    static final int SQUARE_SIZE= 25;
+    static final int SQUARE_SIZE= 50;
 
     public ConquestComponent(Board board) {
 	this.board = board;
@@ -45,6 +45,8 @@ public class ConquestComponent extends JComponent implements BoardListener
             for (int j = 0; j < this.board.getHeight(); j++) {
                 g2d.setColor(colorMap.get(this.board.getSquareType(i, j)));
                 g2d.fillRect(i * SQUARE_SIZE, j * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
+		g2d.setColor(Color.black);
+		g2d.drawRect(i * SQUARE_SIZE, j * SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE);
             }
         }
     }
