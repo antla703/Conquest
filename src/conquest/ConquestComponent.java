@@ -18,10 +18,14 @@ public class ConquestComponent extends JComponent implements BoardListener
 
 	colorMap = new EnumMap<SquareType, Color>(SquareType.class);
 	colorMap.put(SquareType.EMPTY, Color.GRAY);
-	colorMap.put(SquareType.SCOUT, Color.CYAN);
-	colorMap.put(SquareType.SOLDIER, Color.BLUE);
-	colorMap.put(SquareType.KNIGHT, Color.ORANGE);
-	colorMap.put(SquareType.CHAMPION, Color.YELLOW);
+	colorMap.put(SquareType.SCOUT_1, Color.CYAN);
+	colorMap.put(SquareType.SOLDIER_1, Color.BLUE);
+	colorMap.put(SquareType.KNIGHT_1, Color.ORANGE);
+	colorMap.put(SquareType.CHAMPION_1, Color.YELLOW);
+	colorMap.put(SquareType.SCOUT_2, Color.PINK);
+	colorMap.put(SquareType.SOLDIER_2, Color.GREEN);
+	colorMap.put(SquareType.KNIGHT_2, Color.RED);
+	colorMap.put(SquareType.CHAMPION_2, Color.MAGENTA);
     }
 
     @Override public Dimension getPreferredSize() {

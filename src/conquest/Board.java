@@ -17,7 +17,8 @@ public class Board
     private boolean gameOver = false;
     //private CollisionHandler collisionHandler = new DefaultCollisionHandler();
     private int width = DEFAULT_WIDTH;
-    private int height = DEFAULT_WIDTH;
+    private int height = DEFAULT_HEIGHT;
+    private int curretPlayer = 1;
 
     static final int DEFAULT_WIDTH = 9;
     static final int DEFAULT_HEIGHT = 9;
@@ -47,7 +48,25 @@ public class Board
             case 1:
                 break;
             default:
-                
+                setSquareType(0, 0, SquareType.SCOUT_1);
+                setSquareType(2, 0, SquareType.KNIGHT_1);
+                setSquareType(4, 0, SquareType.CHAMPION_1);
+                setSquareType(6, 0, SquareType.KNIGHT_1);
+                setSquareType(8, 0, SquareType.SCOUT_1);
+                setSquareType(1, 1, SquareType.SOLDIER_1);
+                setSquareType(3, 1, SquareType.SCOUT_1);
+                setSquareType(5, 1, SquareType.SCOUT_1);
+                setSquareType(7, 1, SquareType.SOLDIER_1);
+
+                setSquareType(0, 8, SquareType.SCOUT_2);
+                setSquareType(2, 8, SquareType.KNIGHT_2);
+                setSquareType(4, 8, SquareType.CHAMPION_2);
+                setSquareType(6, 8, SquareType.KNIGHT_2);
+                setSquareType(8, 8, SquareType.SCOUT_2);
+                setSquareType(1, 7, SquareType.SOLDIER_2);
+                setSquareType(3, 7, SquareType.SCOUT_2);
+                setSquareType(5, 7, SquareType.SCOUT_2);
+                setSquareType(7, 7, SquareType.SOLDIER_2);
         }
     }
 
@@ -66,6 +85,10 @@ public class Board
 
     public SquareType getSquareType(int x, int y) {
         return this.squares[x][y];
+    }
+
+    public int getPlayer(int x, int y) {
+        return 1;
     }
 
     /**public void resetCollisionHandler(){
