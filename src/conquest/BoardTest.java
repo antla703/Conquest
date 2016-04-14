@@ -7,5 +7,7 @@ public final class BoardTest {
         frame.pack();
         frame.setVisible(true);
 	board.updateBoard();
+
+        board.getPlayer(0,0);
     }
 }

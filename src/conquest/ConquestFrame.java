@@ -5,8 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ConquestFrame extends JFrame
-{
+public class ConquestFrame extends JFrame {
     private Board board;
     private ConquestComponent conquestComponent;
 

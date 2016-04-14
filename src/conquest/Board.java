@@ -1,11 +1,9 @@
 package conquest;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.awt.Point;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a board
@@ -18,7 +16,7 @@ public class Board
     //private CollisionHandler collisionHandler = new DefaultCollisionHandler();
     private int width = DEFAULT_WIDTH;
     private int height = DEFAULT_HEIGHT;
-    private int curretPlayer = 1;
+    private int currentPlayer = 1;
 
     static final int DEFAULT_WIDTH = 9;
     static final int DEFAULT_HEIGHT = 9;
@@ -78,6 +76,12 @@ public class Board
         return this.squares[0].length;
     }
 
+    public int getCurrentPlayer(){
+
+	return this.currentPlayer;
+
+    }
+
     protected void setSquareType(int x, int y, SquareType st) {
         this.squares[x][y] = st;
         this.notifyListeners();
@@ -88,7 +92,32 @@ public class Board
     }
 
     public int getPlayer(int x, int y) {
-        return 1;
+
+	SquareType squareType = getSquareType(x,y);
+
+	String square = squareType + "";
+
+	if(square.contains("1")){
+	    return 1;
+	}
+	else if(square.contains("2")){
+	    return 2;
+	}
+	else{
+	    return 0;
+	}
+
+    }
+
+    public boolean isPlayer(int x, int y, int player){
+
+	if(getPlayer(x, y) == player){
+	    return true;
+	}
+	else{
+	    return false;
+	}
+
     }
 
     /**public void resetCollisionHandler(){
