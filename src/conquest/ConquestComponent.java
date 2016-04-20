@@ -28,6 +28,10 @@ public class ConquestComponent extends JComponent implements BoardListener
 	colorMap.put(SquareType.CHAMPION_2, Color.MAGENTA);
     }
 
+    public static int getSquareSize(){
+	return SQUARE_SIZE;
+    }
+
     @Override public Dimension getPreferredSize() {
         super.getPreferredSize();
         return new Dimension(this.board.getWidth() * SQUARE_SIZE, this.board.getHeight() * SQUARE_SIZE);

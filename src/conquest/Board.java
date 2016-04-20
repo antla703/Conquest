@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Board
 {
-    private SquareType[][] squares;
+    private Square[][] squares;
     private List<BoardListener> listenerList;
     private boolean gameOver = false;
     //private CollisionHandler collisionHandler = new DefaultCollisionHandler();
@@ -30,11 +30,11 @@ public class Board
                 this.height = DEFAULT_HEIGHT;
                 break;
         }
-        this.squares = new SquareType[width][height];
+        this.squares = new Square[width][height];
         listenerList = new ArrayList<BoardListener>();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                setSquareType(i, j, SquareType.EMPTY);
+                setSquare(i, j, new EmptySquare(0));
             }
         }
         spawnUnits(mode);
@@ -46,25 +46,25 @@ public class Board
             case 1:
                 break;
             default:
-                setSquareType(0, 0, SquareType.SCOUT_1);
-                setSquareType(2, 0, SquareType.KNIGHT_1);
-                setSquareType(4, 0, SquareType.CHAMPION_1);
-                setSquareType(6, 0, SquareType.KNIGHT_1);
-                setSquareType(8, 0, SquareType.SCOUT_1);
-                setSquareType(1, 1, SquareType.SOLDIER_1);
-                setSquareType(3, 1, SquareType.SCOUT_1);
-                setSquareType(5, 1, SquareType.SCOUT_1);
-                setSquareType(7, 1, SquareType.SOLDIER_1);
+                setSquare(0, 0, new Scout(1));
+		setSquare(2, 0, new Scout(1));
+		setSquare(4, 0, new Scout(1));
+		setSquare(6, 0, new Scout(1));
+		setSquare(8, 0, new Scout(1));
+		setSquare(1, 1, new Scout(1));
+		setSquare(3, 1, new Scout(1));
+		setSquare(5, 1, new Scout(1));
+		setSquare(7, 1, new Scout(1));
 
-                setSquareType(0, 8, SquareType.SCOUT_2);
-                setSquareType(2, 8, SquareType.KNIGHT_2);
-                setSquareType(4, 8, SquareType.CHAMPION_2);
-                setSquareType(6, 8, SquareType.KNIGHT_2);
-                setSquareType(8, 8, SquareType.SCOUT_2);
-                setSquareType(1, 7, SquareType.SOLDIER_2);
-                setSquareType(3, 7, SquareType.SCOUT_2);
-                setSquareType(5, 7, SquareType.SCOUT_2);
-                setSquareType(7, 7, SquareType.SOLDIER_2);
+		setSquare(0, 8, new Scout(2));
+		setSquare(2, 8, new Scout(2));
+		setSquare(4, 8, new Scout(2));
+		setSquare(6, 8, new Scout(2));
+		setSquare(8, 8, new Scout(2));
+		setSquare(1, 7, new Scout(2));
+		setSquare(3, 7, new Scout(2));
+		setSquare(5, 7, new Scout(2));
+		setSquare(7, 7, new Scout(2));
         }
     }
 
@@ -82,25 +82,23 @@ public class Board
 
     }
 
-    protected void setSquareType(int x, int y, SquareType st) {
-        this.squares[x][y] = st;
+    protected void setSquare(int x, int y, Square s) {
+        this.squares[x][y] = s;
         this.notifyListeners();
     }
 
-    public SquareType getSquareType(int x, int y) {
-        return this.squares[x][y];
+    public Square getSquare(int x, int y) {
+	return this.squares[x][y];
     }
 
     public int getPlayer(int x, int y) {
 
-	SquareType squareType = getSquareType(x,y);
+	Square square = getSquare(x,y);
 
-	String square = squareType + "";
-
-	if(square.contains("1")){
+	if(square.getPlayer() == 1){
 	    return 1;
 	}
-	else if(square.contains("2")){
+	else if(square.getPlayer() == 2){
 	    return 2;
 	}
 	else{
@@ -158,17 +156,17 @@ public class Board
     private void deleteRow(int row) {
         for (int i = row; i > 0; i--) {
             for (int column = 0; column < this.getWidth(); column++) {
-                this.setSquareType(column, i, this.getSquareType(column, i - 1));
+                this.setSquare(column, i, this.getSquare(column, i - 1));
             }
         }
 
-        for (int column = 0; column < this.getWidth(); column++) {
-            this.setSquareType(column, 0, SquareType.EMPTY);
-        }
+        /**for (int column = 0; column < this.getWidth(); column++) {
+            this.setSquare(column, 0, new EmptySquare(0));
+        }**/
     }
 
     protected boolean isSquareEmpty(int x, int y) {
-        if (this.getSquareType(x, y) == SquareType.EMPTY) {
+        if (this.getSquare(x, y) == SquareType.EMPTY) {
             return true;
         }
         return false;
@@ -177,7 +175,7 @@ public class Board
     private void clearBoard() {
         for (int i = 0; i < this.width; i++) {
             for (int j = 0; j < this.height; j++) {
-		squares[i][j] = SquareType.EMPTY;
+		squares[i][j] = new EmptySquare(0);
             }
         }
         this.notifyListeners();
