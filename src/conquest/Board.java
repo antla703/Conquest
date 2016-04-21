@@ -88,7 +88,9 @@ public class Board
     }
 
     public Square getSquare(int x, int y) {
+
 	return this.squares[x][y];
+
     }
 
     public int getPlayer(int x, int y) {

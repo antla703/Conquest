@@ -11,7 +11,7 @@ public class Scout extends AbstractSquare {
 
     public Scout(int player){
 
-	super(player);
+	super(player, 1, 1, 3);
 
 	if (player == 0){
 
