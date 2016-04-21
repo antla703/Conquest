@@ -6,6 +6,6 @@ public interface Square {
 
     int getPlayer();
 
-    public void draw(final Graphics g);
+    public void draw(final Graphics g, int x, int y);
 
 }

@@ -4,9 +4,6 @@ import java.awt.*;
 
 public class Scout extends AbstractSquare {
 
-    private int movement = 3;
-    private int hitpoints = 1;
-    private int damage = 1;
     private Color color;
 
     public Scout(int player){
@@ -18,10 +15,10 @@ public class Scout extends AbstractSquare {
 	    throw new IllegalArgumentException("Invalid player: 0 (neutral)");
 	}
 
-	this.color = this.getColor();
+	this.color = this.setColor();
     }
 
-    private Color getColor(){
+    private Color setColor(){
 	int player = this.getPlayer();
 
 	if (player == 1){
@@ -32,31 +29,16 @@ public class Scout extends AbstractSquare {
 	}
     }
 
-    public int getMovement(){
-	return this.movement;
-    }
+    /**public Color getColor(){
+	return this.color;
+    }**/
 
-    public int getHitpoints(){
-	return this.hitpoints;
-    }
-
-    public int getDamage()
-    {
-	return this.damage;
-    }
-
-    @Override public void draw(final Graphics g) {
+    @Override public void draw(final Graphics g, int x, int y) {
 
     	g.setColor(color);
 	int size = ConquestComponent.getSquareSize();
-    	g.drawRect(x*size, y*size, size, size);
-
+    	g.fillRect(x * size, y * size, size, size);
+	g.setColor(Color.black);
+	g.drawRect(x * size, y * size, size, size);
         }
-
-    public void takeDamage(int damage){
-
-	this.hitpoints -= damage;
-
-    }
-
 }

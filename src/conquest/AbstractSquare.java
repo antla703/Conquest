@@ -2,6 +2,9 @@ package conquest;
 public abstract class AbstractSquare implements Square {
 
     protected int player;
+    private int movement;
+    private int hitpoints;
+    private int damage;
 
     protected AbstractSquare(int player, int hitpoints, int damage, int movement){
 
@@ -14,8 +17,27 @@ public abstract class AbstractSquare implements Square {
 
     }
 
-    public int getPlayer(){
+    @Override public int getPlayer(){
 	return player;
+    }
+
+    public int getMovement(){
+    	return this.movement;
+        }
+
+    public int getHitpoints(){
+    	return this.hitpoints;
+        }
+
+    public int getDamage()
+        {
+    	return this.damage;
+        }
+
+    public void takeDamage(int damage){
+
+	this.hitpoints -= damage;
+
     }
 
 }

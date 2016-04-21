@@ -17,6 +17,7 @@ public class Board
     private int width = DEFAULT_WIDTH;
     private int height = DEFAULT_HEIGHT;
     private int currentPlayer = 1;
+    private int mode;
 
     static final int DEFAULT_WIDTH = 9;
     static final int DEFAULT_HEIGHT = 9;
@@ -30,11 +31,12 @@ public class Board
                 this.height = DEFAULT_HEIGHT;
                 break;
         }
+	this.mode = mode;
         this.squares = new Square[width][height];
         listenerList = new ArrayList<BoardListener>();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                setSquare(i, j, new EmptySquare(0));
+                setSquare(i, j, new Empty(0));
             }
         }
         spawnUnits(mode);
@@ -97,15 +99,7 @@ public class Board
 
 	Square square = getSquare(x,y);
 
-	if(square.getPlayer() == 1){
-	    return 1;
-	}
-	else if(square.getPlayer() == 2){
-	    return 2;
-	}
-	else{
-	    return 0;
-	}
+	return square.getPlayer();
 
     }
 
@@ -114,6 +108,7 @@ public class Board
 	if(getPlayer(x, y) == player){
 	    return true;
 	}
+
 	else{
 	    return false;
 	}
@@ -168,7 +163,7 @@ public class Board
     }
 
     protected boolean isSquareEmpty(int x, int y) {
-        if (this.getSquare(x, y) == SquareType.EMPTY) {
+        if (this.isPlayer(x, y, 0)) {
             return true;
         }
         return false;
@@ -177,21 +172,15 @@ public class Board
     private void clearBoard() {
         for (int i = 0; i < this.width; i++) {
             for (int j = 0; j < this.height; j++) {
-		squares[i][j] = new EmptySquare(0);
+		squares[i][j] = new Empty(0);
             }
         }
         this.notifyListeners();
     }
 
     private void resetBoard() {
-        for (int i = 0; i < this.width; i++) {
-            for (int j = 0; j < this.height; j++) {
-		switch(i){
-                    case 0:
-
-                }
-            }
-        }
+	this.clearBoard();
+	this.spawnUnits(this.mode);
     }
 
     public void updateBoard() {
