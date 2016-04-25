@@ -23,7 +23,7 @@ public class Empty extends AbstractSquare
     @Override public void draw(final Graphics g, int x, int y) {
 
     	g.setColor(this.color);
-	int size = ConquestComponent.getSquareSize();
+	int size = conquestComponent.getSquareSize();
     	g.fillRect(x*size, y*size, size, size);
 	g.setColor(Color.black);
 	g.drawRect(x * size, y * size, size, size);

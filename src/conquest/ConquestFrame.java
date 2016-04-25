@@ -39,4 +39,56 @@ public class ConquestFrame extends JFrame {
         menuBar.add(gameMenu);
         this.setJMenuBar(menuBar);
     }
+
+    private Action moveLeft = new AbstractAction() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            board.moveLeft();
+        }
+    };
+
+    private Action moveRight = new AbstractAction() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            board.moveRight();
+        }
+    };
+
+    private Action moveDown = new AbstractAction() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            board.moveDown();
+        }
+    };
+
+    private Action moveUp = new AbstractAction() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            board.moveUp();
+        }
+    };
+
+    private Action toggleMove = new AbstractAction() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            board.toggleMove();
+        }
+    };
+
+    private void setKeyBindings() {
+        conquestComponent.getInputMap().put(KeyStroke.getKeyStroke("A"), "moveLeft");
+        conquestComponent.getActionMap().put("moveLeft", moveLeft);
+
+        conquestComponent.getInputMap().put(KeyStroke.getKeyStroke("D"), "moveRight");
+        conquestComponent.getActionMap().put("moveRight", moveRight);
+
+        conquestComponent.getInputMap().put(KeyStroke.getKeyStroke("S"), "moveDown");
+        conquestComponent.getActionMap().put("moveDown", moveDown);
+
+        conquestComponent.getInputMap().put(KeyStroke.getKeyStroke("W"), "MoveUp");
+        conquestComponent.getActionMap().put("moveUp", moveUp);
+
+	conquestComponent.getInputMap().put(KeyStroke.getKeyStroke("P"), "toggleMove");
+ 	conquestComponent.getActionMap().put("toggleMove", toggleMove);
+    }
 }

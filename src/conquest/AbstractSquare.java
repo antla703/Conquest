@@ -2,7 +2,7 @@ package conquest;
 public abstract class AbstractSquare implements Square {
 
     protected int player;
-    private int movement;
+    protected int movement;
     private int hitpoints;
     private int damage;
 

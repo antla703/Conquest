@@ -1,6 +1,7 @@
 package conquest;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,9 @@ public class Board
     private int height = DEFAULT_HEIGHT;
     private int currentPlayer = 1;
     private int mode;
+    private Square active = null;
+    private Point activePos = null;
+    private boolean selecting = true;
 
     static final int DEFAULT_WIDTH = 9;
     static final int DEFAULT_HEIGHT = 9;
@@ -83,6 +87,26 @@ public class Board
 	return this.currentPlayer;
 
     }
+    public Square getActive(){
+	return this.active;
+    }
+
+    public void setActive(Point point){
+
+	if (selecting){
+
+	    int x = (int)point.getX();
+	    int y = (int)point.getY();
+
+	    if (getPlayer(x, y) == this.currentPlayer){
+
+		this.activePos = point;
+		this.active = getSquare(x, y);
+		this.toggleMove();
+
+	    }
+	}
+    }
 
     protected void setSquare(int x, int y, Square s) {
         this.squares[x][y] = s;
@@ -141,7 +165,7 @@ public class Board
 	if (this.gameOver) {
 	    this.clearBoard();
 	    String message = " Continue? ";
-	    String title = " Tetris ";
+	    String title = " Conquest ";
 	    int reply = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
 	    if (reply == JOptionPane.NO_OPTION) { System.exit(0); }
 	    this.gameOver = false;
@@ -167,6 +191,71 @@ public class Board
             return true;
         }
         return false;
+    }
+
+    private boolean existsActive(){
+
+	return this.active != null;
+
+    }
+
+    public void moveLeft(){
+
+	if (this.existsActive() && !this.selecting){
+
+	    this.activePos.x -= 1;
+	    this.notifyListeners();
+
+	}
+
+    }
+
+    public void moveRight(){
+
+	if (this.existsActive() && !this.selecting){
+
+	    this.activePos.x += 1;
+	    this.notifyListeners();
+
+	}
+
+    }
+
+    public void moveDown(){
+
+	if (this.existsActive() && !this.selecting){
+
+	    this.activePos.y += 1;
+	    this.notifyListeners();
+
+	}
+
+    }
+
+    public void moveUp(){
+
+	if (this.existsActive() && !this.selecting){
+
+	    this.activePos.y -= 1;
+	    this.notifyListeners();
+
+	}
+
+    }
+
+    public void toggleMove(){
+
+	if (this.selecting && this.existsActive()){
+
+	    this.selecting = false;
+
+	}
+	else if (!this.selecting && this.existsActive()){
+
+
+
+	}
+
     }
 
     private void clearBoard() {
