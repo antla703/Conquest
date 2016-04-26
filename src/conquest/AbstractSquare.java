@@ -9,11 +9,13 @@ public abstract class AbstractSquare implements Square {
     protected AbstractSquare(int player, int hitpoints, int damage, int movement){
 
 	if (player > 2 || player < 0){
-
 	    throw new IllegalArgumentException("Invalid player.");
 	}
 
 	this.player = player;
+	this.hitpoints = hitpoints;
+	this.damage = damage;
+	this.movement = movement;
 
     }
 
@@ -21,20 +23,20 @@ public abstract class AbstractSquare implements Square {
 	return player;
     }
 
-    public int getMovement(){
+    @Override public int getMovement(){
     	return this.movement;
         }
 
-    public int getHitpoints(){
+    @Override public int getHitpoints(){
     	return this.hitpoints;
         }
 
-    public int getDamage()
+    @Override public int getDamage()
         {
     	return this.damage;
         }
 
-    public void takeDamage(int damage){
+    @Override public void takeDamage(int damage){
 
 	this.hitpoints -= damage;
 

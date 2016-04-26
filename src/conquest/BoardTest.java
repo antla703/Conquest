@@ -6,8 +6,8 @@ public final class BoardTest {
         ConquestFrame frame = new ConquestFrame(board);
         frame.pack();
         frame.setVisible(true);
-	board.updateBoard();
+	//board.updateBoard();
 
-        board.getPlayer(0,0);
+        //board.getPlayer(0,0);
     }
 }

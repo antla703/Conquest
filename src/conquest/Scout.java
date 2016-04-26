@@ -29,10 +29,6 @@ public class Scout extends AbstractSquare {
 	}
     }
 
-    /**public Color getColor(){
-	return this.color;
-    }**/
-
     @Override public void draw(final Graphics g, int x, int y) {
 
     	g.setColor(color);
@@ -40,5 +36,6 @@ public class Scout extends AbstractSquare {
     	g.fillRect(x * size, y * size, size, size);
 	g.setColor(Color.black);
 	g.drawRect(x * size, y * size, size, size);
-        }
+	g.drawString(String.valueOf(this.getHitpoints()), x * size + size/2, y * size + size/2);
+    }
 }

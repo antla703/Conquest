@@ -18,7 +18,7 @@ public class ConquestFrame extends JFrame {
 
         this.setLayout(new BorderLayout());
         this.add(conquestComponent, BorderLayout.CENTER);
-        //this.setKeyBindings();
+        this.setKeyBindings();
     }
 
     public void createMenus() {
@@ -85,7 +85,7 @@ public class ConquestFrame extends JFrame {
         conquestComponent.getInputMap().put(KeyStroke.getKeyStroke("S"), "moveDown");
         conquestComponent.getActionMap().put("moveDown", moveDown);
 
-        conquestComponent.getInputMap().put(KeyStroke.getKeyStroke("W"), "MoveUp");
+        conquestComponent.getInputMap().put(KeyStroke.getKeyStroke("W"), "moveUp");
         conquestComponent.getActionMap().put("moveUp", moveUp);
 
 	conquestComponent.getInputMap().put(KeyStroke.getKeyStroke("P"), "toggleMove");

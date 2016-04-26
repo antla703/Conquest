@@ -6,14 +6,10 @@ public class Empty extends AbstractSquare
 {
     private Color color = Color.lightGray;
 
-    public Empty(int player){
+    public Empty(){
 
-	super(player, 1, 1, 0);
+	super(0, 1, 1, 0);
 
-	if (player > 0){
-
-	    throw new IllegalArgumentException("Invalid player: " + player + " (not neutral)");
-	}
     }
 
     /**public Color getColor(){
@@ -23,7 +19,7 @@ public class Empty extends AbstractSquare
     @Override public void draw(final Graphics g, int x, int y) {
 
     	g.setColor(this.color);
-	int size = conquestComponent.getSquareSize();
+	int size = ConquestComponent.getSquareSize();
     	g.fillRect(x*size, y*size, size, size);
 	g.setColor(Color.black);
 	g.drawRect(x * size, y * size, size, size);

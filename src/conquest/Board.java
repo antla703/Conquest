@@ -19,9 +19,12 @@ public class Board
     private int height = DEFAULT_HEIGHT;
     private int currentPlayer = 1;
     private int mode;
+    private final static int TICK_DELAY = 200;
     private Square active = null;
     private Point activePos = null;
+    private int activeMovement;
     private boolean selecting = true;
+    private CollisionHandler collisionHandler = new DefaultCollisionHandler();
 
     static final int DEFAULT_WIDTH = 9;
     static final int DEFAULT_HEIGHT = 9;
@@ -40,7 +43,7 @@ public class Board
         listenerList = new ArrayList<BoardListener>();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                setSquare(i, j, new Empty(0));
+                setSquare(i, j, new Empty());
             }
         }
         spawnUnits(mode);
@@ -91,6 +94,10 @@ public class Board
 	return this.active;
     }
 
+    public Point getActivePos() {
+	return this.activePos;
+    }
+
     public void setActive(Point point){
 
 	if (selecting){
@@ -102,8 +109,12 @@ public class Board
 
 		this.activePos = point;
 		this.active = getSquare(x, y);
+		this.activeMovement = this.active.getMovement();
 		this.toggleMove();
-
+		System.out.println("Unit selected");
+	    }
+	    else {
+		System.out.println("Invalid player unit");
 	    }
 	}
     }
@@ -114,12 +125,10 @@ public class Board
     }
 
     public Square getSquare(int x, int y) {
-
 	return this.squares[x][y];
-
     }
 
-    public int getPlayer(int x, int y) {
+    private int getPlayer(int x, int y) {
 
 	Square square = getSquare(x,y);
 
@@ -127,8 +136,7 @@ public class Board
 
     }
 
-    public boolean isPlayer(int x, int y, int player){
-
+    private boolean isPlayer(int x, int y, int player){
 	if(getPlayer(x, y) == player){
 	    return true;
 	}
@@ -137,6 +145,16 @@ public class Board
 	    return false;
 	}
 
+    }
+
+    protected boolean isEnemy(int x, int y){
+	if (isPlayer(x, y, this.currentPlayer)){
+	    return false;
+	}
+
+	else{
+	    return !isEmpty(x, y);
+	}
     }
 
     /**public void resetCollisionHandler(){
@@ -150,7 +168,7 @@ public class Board
     private void notifyListeners() {
         for (BoardListener boardListener : listenerList) {
             boardListener.boardChanged();
-        }
+	}
     }
 
     private final Action doOneStep = new AbstractAction() {
@@ -159,7 +177,7 @@ public class Board
         }
     };
 
-    //private final Timer clockTimer = new Timer(TICK_DELAY, doOneStep);
+    private final Timer clockTimer = new Timer(TICK_DELAY, doOneStep);
 
     private void tick() {
 	if (this.gameOver) {
@@ -171,7 +189,7 @@ public class Board
 	    this.gameOver = false;
 	}
 
-	this.notifyListeners();
+	//this.notifyListeners();
     }
 
     private void deleteRow(int row) {
@@ -186,7 +204,7 @@ public class Board
         }**/
     }
 
-    protected boolean isSquareEmpty(int x, int y) {
+    protected boolean isEmpty(int x, int y) {
         if (this.isPlayer(x, y, 0)) {
             return true;
         }
@@ -201,9 +219,16 @@ public class Board
 
     public void moveLeft(){
 
-	if (this.existsActive() && !this.selecting){
-
+	if (this.existsActive() && !this.selecting && !this.collisionHandler.hasCollision(-1, 0, this)){
+	    setSquare(this.activePos.x -1, this.activePos.y, active);
+	    setSquare(this.activePos.x, this.activePos.y, new Empty());
 	    this.activePos.x -= 1;
+
+	    if (this.activeMovement <= 1) {
+		this.toggleMove();
+	    }
+
+	    this.activeMovement -= 1;
 	    this.notifyListeners();
 
 	}
@@ -212,9 +237,16 @@ public class Board
 
     public void moveRight(){
 
-	if (this.existsActive() && !this.selecting){
-
+	if (this.existsActive() && !this.selecting && !this.collisionHandler.hasCollision(1, 0, this)){
+	    setSquare(this.activePos.x +1, this.activePos.y, active);
+	    setSquare(this.activePos.x, this.activePos.y, new Empty());
 	    this.activePos.x += 1;
+
+	    if (this.activeMovement <= 1) {
+		this.toggleMove();
+	    }
+
+	    this.activeMovement -= 1;
 	    this.notifyListeners();
 
 	}
@@ -223,22 +255,33 @@ public class Board
 
     public void moveDown(){
 
-	if (this.existsActive() && !this.selecting){
-
+	if (this.existsActive() && !this.selecting && !this.collisionHandler.hasCollision(0, 1, this)){
+	    setSquare(this.activePos.x, this.activePos.y +1, active);
+	    setSquare(this.activePos.x, this.activePos.y, new Empty());
 	    this.activePos.y += 1;
-	    this.notifyListeners();
 
+	    if (this.activeMovement <= 1) {
+		this.toggleMove();
+	    }
+
+	    this.activeMovement -= 1;
+	    this.notifyListeners();
 	}
 
     }
 
     public void moveUp(){
-
-	if (this.existsActive() && !this.selecting){
-
+	if (this.existsActive() && !this.selecting && !this.collisionHandler.hasCollision(0, -1, this)){
+	    setSquare(this.activePos.x, this.activePos.y -1, active);
+	    setSquare(this.activePos.x, this.activePos.y, new Empty());
 	    this.activePos.y -= 1;
-	    this.notifyListeners();
 
+	    if (this.activeMovement <= 1) {
+		this.toggleMove();
+	    }
+
+	    this.activeMovement -= 1;
+	    this.notifyListeners();
 	}
 
     }
@@ -246,14 +289,19 @@ public class Board
     public void toggleMove(){
 
 	if (this.selecting && this.existsActive()){
-
 	    this.selecting = false;
-
 	}
+
 	else if (!this.selecting && this.existsActive()){
+	    this.selecting = true;
 
+	    if (this.currentPlayer == 1){
+		this.currentPlayer = 2;
+	    }
 
-
+	    else {
+		this.currentPlayer = 1;
+	    }
 	}
 
     }
@@ -261,7 +309,7 @@ public class Board
     private void clearBoard() {
         for (int i = 0; i < this.width; i++) {
             for (int j = 0; j < this.height; j++) {
-		squares[i][j] = new Empty(0);
+		squares[i][j] = new Empty();
             }
         }
         this.notifyListeners();
@@ -273,7 +321,7 @@ public class Board
     }
 
     public void updateBoard() {
-        //clockTimer.setCoalesce(true);
-        //clockTimer.start();
+        clockTimer.setCoalesce(true);
+        clockTimer.start();
     }
 }
