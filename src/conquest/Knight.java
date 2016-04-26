@@ -2,13 +2,13 @@ package conquest;
 
 import java.awt.*;
 
-public class Scout extends AbstractSquare {
+public class Knight extends AbstractSquare {
 
     private Color color;
 
-    public Scout(Player player){
+    public Knight(Player player){
 
-	super(player, 1, 2, 3);
+	super(player, 2, 3, 2);
 
 	if (player != Player.PLAYER1 && player != Player.PLAYER2){
 
@@ -22,11 +22,11 @@ public class Scout extends AbstractSquare {
 	Player player = this.getPlayer();
 
 	if (player == Player.PLAYER1){
-	    this.color = Color.CYAN;
+	    this.color = Color.PINK;
 	}
 
 	else{
-	    this.color = Color.BLUE;
+	    this.color = Color.RED;
 	}
     }
 

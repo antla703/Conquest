@@ -4,16 +4,18 @@ import java.awt.*;
 
 public interface Square {
 
-    int getPlayer();
+    Player getPlayer();
 
-    public int getMovement();
+    int getMovement();
 
-    public int getHitpoints();
+    int getHitpoints();
 
-    public int getDamage();
+    int getDamage();
 
-    public void takeDamage(int damage);
+    void takeDamage(int damage);
 
-    public void draw(final Graphics g, int x, int y);
+    Color getColor();
+
+    void draw(final Graphics g, int x, int y);
 
 }

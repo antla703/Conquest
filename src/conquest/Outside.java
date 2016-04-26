@@ -2,13 +2,13 @@ package conquest;
 
 import java.awt.*;
 
-public class Empty extends AbstractSquare
+public class Outside extends AbstractSquare
 {
-    private Color color = Color.lightGray;
+    private Color color = Color.WHITE;
 
-    public Empty(){
+    public Outside(){
 
-	super(Player.EMPTY, 1, 0, 0);
+	super(Player.OUTSIDE, 1, 0, 0);
 
     }
 
@@ -26,4 +26,3 @@ public class Empty extends AbstractSquare
 
     }
 }
-

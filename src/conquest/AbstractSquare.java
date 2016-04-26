@@ -1,25 +1,22 @@
 package conquest;
+
+import java.awt.*;
+
 public abstract class AbstractSquare implements Square {
 
-    protected int player;
+    protected Player player;
     protected int movement;
     private int hitpoints;
     private int damage;
 
-    protected AbstractSquare(int player, int hitpoints, int damage, int movement){
-
-	if (player > 2 || player < 0){
-	    throw new IllegalArgumentException("Invalid player.");
-	}
-
+    protected AbstractSquare(Player player, int hitpoints, int damage, int movement){
 	this.player = player;
 	this.hitpoints = hitpoints;
 	this.damage = damage;
 	this.movement = movement;
-
     }
 
-    @Override public int getPlayer(){
+    @Override public Player getPlayer(){
 	return player;
     }
 
@@ -40,6 +37,16 @@ public abstract class AbstractSquare implements Square {
 
 	this.hitpoints -= damage;
 
+    }
+
+    @Override public void draw(final Graphics g, int x, int y) {
+
+    	g.setColor(this.getColor());
+	int size = ConquestComponent.getSquareSize();
+    	g.fillRect(x * size, y * size, size, size);
+	g.setColor(Color.black);
+	g.drawRect(x * size, y * size, size, size);
+	g.drawString(String.valueOf(this.getHitpoints()), x * size + size/2, y * size + size/2);
     }
 
 }

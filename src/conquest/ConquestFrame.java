@@ -25,6 +25,8 @@ public class ConquestFrame extends JFrame {
         final JMenu gameMenu = new JMenu("Game");
         final JMenuItem quit = new JMenuItem("Quit");
         gameMenu.add(quit);
+        final JMenuItem restart = new JMenuItem("Restart");
+        gameMenu.add(restart);
 
         quit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -32,6 +34,15 @@ public class ConquestFrame extends JFrame {
                 String title = " Quit ";
                 int reply = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
 		if (reply == JOptionPane.YES_OPTION) { System.exit(0); }
+            }
+        });
+
+        restart.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String message = " Really restart? ";
+                String title = " restart ";
+                int reply = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
+		if (reply == JOptionPane.YES_OPTION) { board.resetBoard(); }
             }
         });
 
