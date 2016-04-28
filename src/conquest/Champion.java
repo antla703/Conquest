@@ -2,6 +2,9 @@ package conquest;
 
 import java.awt.*;
 
+/**
+ * Champion type square
+ */
 public class Champion extends AbstractSquare {
 
     private Color color;

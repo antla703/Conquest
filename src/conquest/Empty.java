@@ -2,6 +2,9 @@ package conquest;
 
 import java.awt.*;
 
+/**
+ * Empty type square
+ */
 public class Empty extends AbstractSquare
 {
     private Color color = Color.lightGray;
@@ -20,10 +23,9 @@ public class Empty extends AbstractSquare
 
     	g.setColor(this.color);
 	int size = ConquestComponent.getSquareSize();
-    	g.fillRect(x*size, y*size, size, size);
+    	g.fillRect(x * size, y * size, size, size);
 	g.setColor(Color.black);
 	g.drawRect(x * size, y * size, size, size);
-
     }
 }
 

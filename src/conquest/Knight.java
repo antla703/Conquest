@@ -2,6 +2,9 @@ package conquest;
 
 import java.awt.*;
 
+/**
+ * Knight type square
+ */
 public class Knight extends AbstractSquare {
 
     private Color color;

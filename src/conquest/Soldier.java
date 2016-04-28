@@ -2,6 +2,9 @@ package conquest;
 
 import java.awt.*;
 
+/**
+ * Soldier type square
+ */
 public class Soldier extends AbstractSquare {
 
     private Color color;

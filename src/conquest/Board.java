@@ -1,8 +1,6 @@
 package conquest;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +11,10 @@ public class Board
 {
     private Square[][] squares;
     private List<BoardListener> listenerList;
-    private boolean gameOver = false;
     private int outsideWidth = DEFAULT_WIDTH;
     private int outsideHeight = DEFAULT_HEIGHT;
     private Player currentPlayer = Player.PLAYER1;
     private int mode;
-    private final static int TICK_DELAY = 200;
     private Square active = null;
     private Point activePos = null;
     private int activeMovement;
@@ -28,6 +24,7 @@ public class Board
     private boolean battlecryUsedP2 = false;
     private boolean sprintUsedP1 = false;
     private boolean sprintUsedP2 = false;
+    private boolean win = false;
 
     static final int DEFAULT_WIDTH = 9;
     static final int DEFAULT_HEIGHT = 9;
@@ -103,8 +100,9 @@ public class Board
 	}
 
     }
-    public Square getActive(){
-	return this.active;
+
+    public boolean getWin(){
+	return this.win;
     }
 
     public Point getActivePos() {
@@ -166,13 +164,9 @@ public class Board
 	}
 
 	else{
-	    return !isEmpty(x, y);
+	    return !isEmpty(x, y) && !isOutside(x, y);
 	}
     }
-
-    /**public void resetCollisionHandler(){
-        this.collisionHandler = new DefaultCollisionHandler();
-    }**/
 
     public void addBoardListener(BoardListener bl) {
         this.listenerList.add(bl);
@@ -184,41 +178,15 @@ public class Board
 	}
     }
 
-    private final Action doOneStep = new AbstractAction() {
-        public void actionPerformed(ActionEvent e) {
-            tick();
-        }
-    };
-
-    private final Timer clockTimer = new Timer(TICK_DELAY, doOneStep);
-
-    private void tick() {
-	if (this.gameOver) {
-	    this.clearBoard();
-	    String message = " Continue? ";
-	    String title = " Conquest ";
-	    int reply = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
-	    if (reply == JOptionPane.NO_OPTION) { System.exit(0); }
-	    this.gameOver = false;
-	}
-
-	//this.notifyListeners();
-    }
-
-    private void deleteRow(int row) {
-        for (int i = row; i > 0; i--) {
-            for (int column = 0; column < this.getWidth(); column++) {
-                this.setSquare(column, i, this.getSquare(column, i - 1));
-            }
-        }
-
-        /**for (int column = 0; column < this.getWidth(); column++) {
-            this.setSquare(column, 0, new EmptySquare(0));
-        }**/
-    }
-
     protected boolean isEmpty(int x, int y) {
         if (this.isPlayer(x, y, Player.EMPTY)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isOutside(int x, int y) {
+        if (this.isPlayer(x, y, Player.OUTSIDE)) {
             return true;
         }
         return false;
@@ -359,14 +327,28 @@ public class Board
 	    this.clearDead();
 
 	    if (this.currentPlayer == Player.PLAYER1){
+		this.checkWin(Player.PLAYER2);
 		this.currentPlayer = Player.PLAYER2;
 	    }
 
 	    else {
+		this.checkWin(Player.PLAYER1);
 		this.currentPlayer = Player.PLAYER1;
 	    }
 	}
 
+    }
+
+    private void checkWin(Player player){
+	this.win = true;
+	for (int i = 0; i < this.getWidth(); i++) {
+	    for (int j = 0; j < this.getHeight(); j++) {
+		if (isPlayer(i, j, player)){
+		    this.win = false;
+		}
+	    }
+	}
+	this.notifyListeners();
     }
 
     private void clearDead() {
@@ -382,17 +364,23 @@ public class Board
     }
 
     private void clearBoard() {
-        for (int i = 0; i < this.getWidth(); i++) {
-            for (int j = 0; j < this.getHeight(); j++) {
-		squares[i][j] = new Empty();
-            }
-        }
-        this.notifyListeners();
+	for (int i = 0; i < outsideWidth; i++) {
+	    for (int j = 0; j < outsideHeight; j++) {
+		if (i == 0 || j == 0 || i == outsideWidth-1 || j == outsideHeight-1) {
+		    squares[i][j] = new Outside();
+         	}
+         	else {
+		    squares[i][j] = new Empty();
+		}
+	    }
+	}
+	this.notifyListeners();
     }
 
     public void resetBoard() {
 	this.clearBoard();
 	this.spawnUnits(this.mode);
+	this.selecting = true;
 	this.currentPlayer = Player.PLAYER1;
 	this.active = null;
 	this.activePos = null;
@@ -401,10 +389,5 @@ public class Board
 	this.battlecryUsedP2 = false;
 	this.sprintUsedP1 = false;
 	this.sprintUsedP2 = false;
-    }
-
-    public void updateBoard() {
-        clockTimer.setCoalesce(true);
-        clockTimer.start();
     }
 }

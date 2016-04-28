@@ -2,6 +2,9 @@ package conquest;
 
 import java.awt.*;
 
+/**
+ * Square interface. Represents units on the board, empty and outside squares.
+ */
 public interface Square {
 
     Player getPlayer();

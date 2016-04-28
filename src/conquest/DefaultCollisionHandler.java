@@ -1,5 +1,10 @@
 package conquest;
 
+/**
+ * Default collision handler.
+ * Whenever active square hits a another non-empty square, a collision is detected.
+ * Offset values used to define in which direction to detect collisions.
+ */
 public class DefaultCollisionHandler implements CollisionHandler
 {
     public boolean hasCollision(int xOffset, int yOffset, Board board) {
@@ -16,9 +21,5 @@ public class DefaultCollisionHandler implements CollisionHandler
 	    return true;
 	}
         return false;
-    }
-
-    public String getDescription() {
-	return "Default";
     }
 }

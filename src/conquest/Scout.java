@@ -2,6 +2,9 @@ package conquest;
 
 import java.awt.*;
 
+/**
+ * Scout type square
+ */
 public class Scout extends AbstractSquare {
 
     private Color color;

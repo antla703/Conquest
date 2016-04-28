@@ -2,6 +2,9 @@ package conquest;
 
 import java.awt.*;
 
+/**
+ * Abstract class for all squares
+ */
 public abstract class AbstractSquare implements Square {
 
     protected Player player;
@@ -51,7 +54,7 @@ public abstract class AbstractSquare implements Square {
     	g.fillRect(x * size, y * size, size, size);
 	g.setColor(Color.black);
 	g.drawRect(x * size, y * size, size, size);
-	g.drawString(String.valueOf(this.getHitpoints()), x * size + size/2, y * size + size/2);
+	g.drawString(String.valueOf(this.hitpoints), x * size + size/2, y * size + size/2);
     }
 
 }

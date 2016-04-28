@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Conquest component. Paints board and displays current player.
+ */
 public class ConquestComponent extends JComponent implements BoardListener {
 
     private Board board;
@@ -17,8 +20,8 @@ public class ConquestComponent extends JComponent implements BoardListener {
 	addMouseListener(new MouseAdapter(){
 	    public void mousePressed(MouseEvent me){
 		Point point = me.getPoint();
-		selectPoint(new Point((int)point.getX() / 50, (int)point.getY() / 50));
-		System.out.println((int)point.getX()/50);
+		selectPoint(new Point((int)point.getX() / SQUARE_SIZE, (int)point.getY() / SQUARE_SIZE));
+		System.out.println((int)point.getX()/SQUARE_SIZE);
 	    }
 	});
     }
@@ -57,6 +60,9 @@ public class ConquestComponent extends JComponent implements BoardListener {
             }
         }
 	JLabel c = new JLabel("Current player: " + Integer.toString(board.getCurrentPlayerInt()));
+	if (board.getWin()){
+	    c = new JLabel("Game Over");
+	}
  	c.setBounds(0, 0, LABEL_WIDTH, LABEL_HEIGHT);
  	c.paint(g);
     }

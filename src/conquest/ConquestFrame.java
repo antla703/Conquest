@@ -5,6 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Conquest frame. Creates frame in which board and score is drawn with option to quit or restart the game.
+ */
 public class ConquestFrame extends JFrame {
     private Board board;
     private ConquestComponent conquestComponent;
