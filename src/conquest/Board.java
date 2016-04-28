@@ -24,6 +24,10 @@ public class Board
     private int activeMovement;
     private boolean selecting = true;
     private CollisionHandler collisionHandler = new DefaultCollisionHandler();
+    private boolean battlecryUsedP1 = false;
+    private boolean battlecryUsedP2 = false;
+    private boolean sprintUsedP1 = false;
+    private boolean sprintUsedP2 = false;
 
     static final int DEFAULT_WIDTH = 9;
     static final int DEFAULT_HEIGHT = 9;
@@ -89,9 +93,14 @@ public class Board
         return this.squares[0].length-2;
     }
 
-    public Player getCurrentPlayer(){
+    public int getCurrentPlayerInt(){
 
-	return this.currentPlayer;
+	if (this.currentPlayer == Player.PLAYER1){
+	    return 1;
+	}
+	else{
+	    return 2;
+	}
 
     }
     public Square getActive(){
@@ -219,6 +228,30 @@ public class Board
 
 	return this.active != null;
 
+    }
+
+    public void battlecry(){
+	if (this.currentPlayer == Player.PLAYER1 && !this.battlecryUsedP1 && !this.selecting){
+	    this.active.battlecry();
+	    this.battlecryUsedP1 = true;
+	}
+	else if (this.currentPlayer == Player.PLAYER2 && !this.battlecryUsedP2 && !this.selecting){
+	    this.active.battlecry();
+	    this.battlecryUsedP2 = true;
+	}
+
+	this.notifyListeners();
+    }
+
+    public void sprint(){
+	if (this.currentPlayer == Player.PLAYER1 && !this.sprintUsedP1 && !this.selecting){
+	    this.activeMovement += 1;
+	    this.sprintUsedP1 = true;
+	}
+	else if (this.currentPlayer == Player.PLAYER2 && !this.sprintUsedP2 && !this.selecting){
+	    this.activeMovement += 1;
+	    this.sprintUsedP2 = true;
+	}
     }
 
     public void moveLeft(){
@@ -364,6 +397,10 @@ public class Board
 	this.active = null;
 	this.activePos = null;
 	this.activeMovement = 0;
+	this.battlecryUsedP1 = false;
+	this.battlecryUsedP2 = false;
+	this.sprintUsedP1 = false;
+	this.sprintUsedP2 = false;
     }
 
     public void updateBoard() {

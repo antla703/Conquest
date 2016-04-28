@@ -56,5 +56,11 @@ public class ConquestComponent extends JComponent implements BoardListener {
 		square.draw(g2d, i, j);
             }
         }
+	JLabel c = new JLabel("Current player: " + Integer.toString(board.getCurrentPlayerInt()));
+ 	c.setBounds(0, 0, LABEL_WIDTH, LABEL_HEIGHT);
+ 	c.paint(g);
     }
+
+    static final int LABEL_WIDTH = 400;
+    static final int LABEL_HEIGHT = 10;
 }

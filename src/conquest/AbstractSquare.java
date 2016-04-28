@@ -39,6 +39,11 @@ public abstract class AbstractSquare implements Square {
 
     }
 
+    @Override public void battlecry(){
+	this.hitpoints += 1;
+	this.damage += 1;
+    }
+
     @Override public void draw(final Graphics g, int x, int y) {
 
     	g.setColor(this.getColor());

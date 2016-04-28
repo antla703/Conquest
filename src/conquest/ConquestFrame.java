@@ -86,6 +86,20 @@ public class ConquestFrame extends JFrame {
         }
     };
 
+    private Action battlecry = new AbstractAction() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            board.battlecry();
+        }
+    };
+
+    private Action sprint = new AbstractAction() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            board.sprint();
+        }
+    };
+
     private void setKeyBindings() {
         conquestComponent.getInputMap().put(KeyStroke.getKeyStroke("A"), "moveLeft");
         conquestComponent.getActionMap().put("moveLeft", moveLeft);
@@ -101,5 +115,11 @@ public class ConquestFrame extends JFrame {
 
 	conquestComponent.getInputMap().put(KeyStroke.getKeyStroke("P"), "toggleMove");
  	conquestComponent.getActionMap().put("toggleMove", toggleMove);
+
+        conquestComponent.getInputMap().put(KeyStroke.getKeyStroke("K"), "battlecry");
+        conquestComponent.getActionMap().put("battlecry", battlecry);
+
+        conquestComponent.getInputMap().put(KeyStroke.getKeyStroke("L"), "sprint");
+        conquestComponent.getActionMap().put("sprint", sprint);
     }
 }

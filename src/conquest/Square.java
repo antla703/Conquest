@@ -14,6 +14,8 @@ public interface Square {
 
     void takeDamage(int damage);
 
+    void battlecry();
+
     Color getColor();
 
     void draw(final Graphics g, int x, int y);
