@@ -109,6 +109,18 @@ public class Board
 	return this.activePos;
     }
 
+    private Player getPlayer(int x, int y) {
+
+	Square square = getSquare(x,y);
+
+	return square.getPlayer();
+
+    }
+
+    public Square getSquare(int x, int y) {
+    	return this.squares[x+1][y+1];
+        }
+
     public void setActive(Point point){
 
 	if (selecting){
@@ -135,18 +147,6 @@ public class Board
         this.notifyListeners();
     }
 
-    public Square getSquare(int x, int y) {
-	return this.squares[x+1][y+1];
-    }
-
-    private Player getPlayer(int x, int y) {
-
-	Square square = getSquare(x,y);
-
-	return square.getPlayer();
-
-    }
-
     private boolean isPlayer(int x, int y, Player player){
 	if(getPlayer(x, y) == player){
 	    return true;
@@ -168,16 +168,6 @@ public class Board
 	}
     }
 
-    public void addBoardListener(BoardListener bl) {
-        this.listenerList.add(bl);
-    }
-
-    private void notifyListeners() {
-        for (BoardListener boardListener : listenerList) {
-            boardListener.boardChanged();
-	}
-    }
-
     protected boolean isEmpty(int x, int y) {
         if (this.isPlayer(x, y, Player.EMPTY)) {
             return true;
@@ -190,6 +180,16 @@ public class Board
             return true;
         }
         return false;
+    }
+
+    public void addBoardListener(BoardListener bl) {
+        this.listenerList.add(bl);
+    }
+
+    private void notifyListeners() {
+        for (BoardListener boardListener : listenerList) {
+            boardListener.boardChanged();
+	}
     }
 
     private boolean existsActive(){

@@ -5,8 +5,8 @@ import java.awt.*;
 /**
  * Empty type square
  */
-public class Empty extends AbstractSquare
-{
+public class Empty extends AbstractSquare {
+
     private Color color = Color.lightGray;
 
     public Empty(){
