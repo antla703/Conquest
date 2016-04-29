@@ -15,7 +15,7 @@ public class ConquestComponent extends JComponent implements BoardListener {
     /**
      * Size of squares. Affects the pixel size of the whole board, frame, damage font and hitpoints font.
      */
-    static final int SQUARE_SIZE= 70;
+    static final int SQUARE_SIZE= 60;
 
     public ConquestComponent(Board board) {
 	this.board = board;

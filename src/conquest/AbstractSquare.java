@@ -7,8 +7,8 @@ import java.awt.*;
  */
 public abstract class AbstractSquare implements Square {
 
-    protected Player player;
-    protected int movement;
+    private Player player;
+    private int movement;
     private int hitpoints;
     private int damage;
 
