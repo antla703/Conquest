@@ -1,4 +1,4 @@
-package conquest;
+package se.liu.ida.antla703.tddd78.conquest;
 
 import javax.swing.*;
 import java.awt.*;

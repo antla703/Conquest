@@ -1,17 +1,17 @@
-package conquest;
+package se.liu.ida.antla703.tddd78.conquest;
 
 import java.awt.*;
 
 /**
- * Soldier type square
+ * Champion type square
  */
-public class Soldier extends AbstractSquare {
+public class Champion extends AbstractSquare {
 
     private Color color;
 
-    public Soldier(Player player){
+    public Champion(Player player){
 
-	super(player, 3, 1, 2);
+	super(player, 5, 3, 2);
 
 	if (player != Player.PLAYER1 && player != Player.PLAYER2){
 
@@ -25,11 +25,11 @@ public class Soldier extends AbstractSquare {
 	Player player = this.getPlayer();
 
 	if (player == Player.PLAYER1){
-	    this.color = Color.GRAY;
+	    this.color = Color.YELLOW;
 	}
 
 	else{
-	    this.color = Color.DARK_GRAY;
+	    this.color = Color.ORANGE;
 	}
     }
 
