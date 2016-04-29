@@ -10,9 +10,7 @@ public class Empty extends AbstractSquare {
     private Color color = Color.lightGray;
 
     public Empty(){
-
 	super(Player.EMPTY, 1, 0, 0);
-
     }
 
     public Color getColor(){
