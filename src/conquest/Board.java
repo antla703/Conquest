@@ -14,7 +14,6 @@ public class Board
     private int outsideWidth = DEFAULT_WIDTH;
     private int outsideHeight = DEFAULT_HEIGHT;
     private Player currentPlayer = Player.PLAYER1;
-    private int mode;
     private Square active = null;
     private Point activePos = null;
     private int activeMovement;
@@ -26,21 +25,23 @@ public class Board
     private boolean sprintUsedP2 = false;
     private boolean win = false;
 
+    /**
+     * Default width for board
+     */
     static final int DEFAULT_WIDTH = 9;
+
+    /**
+     * Default height for board
+     */
     static final int DEFAULT_HEIGHT = 9;
 
-    public Board(int mode) {
-        switch(mode){
-            case 1:
-                break;
-            default:
-                this.outsideWidth = DEFAULT_WIDTH+2;
-                this.outsideHeight = DEFAULT_HEIGHT+2;
-                break;
-        }
-	this.mode = mode;
+    public Board() {
+	this.outsideWidth = DEFAULT_WIDTH+2;
+	this.outsideHeight = DEFAULT_HEIGHT+2;
+
         this.squares = new Square[this.outsideWidth][this.outsideHeight];
         listenerList = new ArrayList<BoardListener>();
+
         for (int i = 0; i < this.outsideWidth; i++) {
             for (int j = 0; j < this.outsideHeight; j++) {
 		if (i == 0 || j == 0 || i >= this.outsideWidth-1 || j >= this.outsideHeight-1) {
@@ -51,35 +52,32 @@ public class Board
   		}
             }
         }
-        spawnUnits(mode);
+        spawnUnits();
 	this.notifyListeners();
     }
 
-    private void spawnUnits(int mode){
-        switch(mode){
-            case 1:
-                break;
-            default:
-                setSquare(0, 0, new Scout(Player.PLAYER1));
-		setSquare(2, 0, new Knight(Player.PLAYER1));
-		setSquare(4, 0, new Champion(Player.PLAYER1));
-		setSquare(6, 0, new Knight(Player.PLAYER1));
-		setSquare(8, 0, new Scout(Player.PLAYER1));
-		setSquare(1, 1, new Soldier(Player.PLAYER1));
-		setSquare(3, 1, new Scout(Player.PLAYER1));
-		setSquare(5, 1, new Scout(Player.PLAYER1));
-		setSquare(7, 1, new Soldier(Player.PLAYER1));
+    private void spawnUnits(){
+	setSquare(0, 0, new Scout(Player.PLAYER1));
+	setSquare(2, 0, new Knight(Player.PLAYER1));
+	setSquare(4, 0, new Champion(Player.PLAYER1));
+	setSquare(6, 0, new Knight(Player.PLAYER1));
+	setSquare(8, 0, new Scout(Player.PLAYER1));
+	setSquare(1, 1, new Soldier(Player.PLAYER1));
+	setSquare(3, 1, new Scout(Player.PLAYER1));
+	setSquare(5, 1, new Scout(Player.PLAYER1));
+	setSquare(7, 1, new Soldier(Player.PLAYER1));
 
-		setSquare(0, 8, new Scout(Player.PLAYER2));
-		setSquare(2, 8, new Knight(Player.PLAYER2));
-		setSquare(4, 8, new Champion(Player.PLAYER2));
-		setSquare(6, 8, new Knight(Player.PLAYER2));
-		setSquare(8, 8, new Scout(Player.PLAYER2));
-		setSquare(1, 7, new Soldier(Player.PLAYER2));
-		setSquare(3, 7, new Scout(Player.PLAYER2));
-		setSquare(5, 7, new Scout(Player.PLAYER2));
-		setSquare(7, 7, new Soldier(Player.PLAYER2));
-        }
+	setSquare(0, 8, new Scout(Player.PLAYER2));
+	setSquare(2, 8, new Knight(Player.PLAYER2));
+	setSquare(4, 8, new Champion(Player.PLAYER2));
+	setSquare(6, 8, new Knight(Player.PLAYER2));
+	setSquare(8, 8, new Scout(Player.PLAYER2));
+	setSquare(1, 7, new Soldier(Player.PLAYER2));
+	setSquare(3, 7, new Scout(Player.PLAYER2));
+	setSquare(5, 7, new Scout(Player.PLAYER2));
+	setSquare(7, 7, new Soldier(Player.PLAYER2));
+
+	this.notifyListeners();
     }
 
     public int getWidth() {
@@ -109,6 +107,10 @@ public class Board
 	return this.activePos;
     }
 
+    public Square getSquare(int x, int y) {
+	return this.squares[x+1][y+1];
+    }
+
     private Player getPlayer(int x, int y) {
 
 	Square square = getSquare(x,y);
@@ -116,10 +118,6 @@ public class Board
 	return square.getPlayer();
 
     }
-
-    public Square getSquare(int x, int y) {
-    	return this.squares[x+1][y+1];
-        }
 
     public void setActive(Point point){
 
@@ -379,7 +377,7 @@ public class Board
 
     public void resetBoard() {
 	this.clearBoard();
-	this.spawnUnits(this.mode);
+	this.spawnUnits();
 	this.selecting = true;
 	this.currentPlayer = Player.PLAYER1;
 	this.active = null;

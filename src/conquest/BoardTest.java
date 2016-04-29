@@ -6,7 +6,7 @@ package conquest;
  */
 public final class BoardTest {
     public static void main(String[] args) {
-        Board board = new Board(0);
+        Board board = new Board();
         ConquestFrame frame = new ConquestFrame(board);
         frame.pack();
         frame.setVisible(true);

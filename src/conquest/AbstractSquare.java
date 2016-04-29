@@ -54,7 +54,14 @@ public abstract class AbstractSquare implements Square {
     	g.fillRect(x * size, y * size, size, size);
 	g.setColor(Color.black);
 	g.drawRect(x * size, y * size, size, size);
-	g.drawString(String.valueOf(this.hitpoints), x * size + size/2, y * size + size/2);
-    }
 
+	int damageFontSize = ConquestComponent.getSquareSize()/5;
+	int hitpointsFontSize = damageFontSize * 2;
+
+	g.setFont(new Font("TimesRoman", Font.PLAIN, damageFontSize));
+	g.drawString(String.valueOf(this.damage), x * size + size/6, y * size + 5 * size/6);
+	g.setFont(new Font("TimesRoman", Font.PLAIN, hitpointsFontSize));
+	g.drawString(String.valueOf(this.hitpoints), x * size + size/2, y * size + size/2);
+
+    }
 }

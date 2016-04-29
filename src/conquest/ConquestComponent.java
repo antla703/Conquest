@@ -6,13 +6,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- * Conquest component. Paints board and displays current player.
+ * Conquest component. Paints board and displays current player as well as a game over message.
  */
 public class ConquestComponent extends JComponent implements BoardListener {
 
     private Board board;
 
-    static final int SQUARE_SIZE= 50;
+    /**
+     * Size of squares. Affects the pixel size of the whole board, frame, damage font and hitpoints font.
+     */
+    static final int SQUARE_SIZE= 70;
 
     public ConquestComponent(Board board) {
 	this.board = board;
@@ -21,7 +24,6 @@ public class ConquestComponent extends JComponent implements BoardListener {
 	    public void mousePressed(MouseEvent me){
 		Point point = me.getPoint();
 		selectPoint(new Point((int)point.getX() / SQUARE_SIZE, (int)point.getY() / SQUARE_SIZE));
-		System.out.println((int)point.getX()/SQUARE_SIZE);
 	    }
 	});
     }
@@ -67,6 +69,13 @@ public class ConquestComponent extends JComponent implements BoardListener {
  	c.paint(g);
     }
 
+    /**
+     * Width of the label displaying current player or game over.
+     */
     static final int LABEL_WIDTH = 400;
+
+    /**
+     * Height of the label displayinh current player or game over.
+     */
     static final int LABEL_HEIGHT = 10;
 }
