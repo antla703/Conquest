@@ -7,15 +7,10 @@ import java.awt.*;
  */
 public class Outside extends AbstractSquare
 {
-    private Color color = Color.WHITE;
 
     public Outside(){
 
-	super(Player.OUTSIDE, 1, 0, 0);
+	super(PlayerType.NONE, 1, 0, 0, 0, Color.WHITE, Color.WHITE);
 
-    }
-
-    public Color getColor(){
-	return this.color;
     }
 }

@@ -57,28 +57,28 @@ public class ConquestFrame extends JFrame {
     private Action moveLeft = new AbstractAction() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            board.moveLeft();
+            board.move(-1, 0);
         }
     };
 
     private Action moveRight = new AbstractAction() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            board.moveRight();
+            board.move(1, 0);
         }
     };
 
     private Action moveDown = new AbstractAction() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            board.moveDown();
+            board.move(0, 1);
         }
     };
 
     private Action moveUp = new AbstractAction() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            board.moveUp();
+            board.move(0, -1);
         }
     };
 

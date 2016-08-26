@@ -7,13 +7,15 @@ import java.awt.*;
  */
 public interface Square {
 
-    Player getPlayer();
+    PlayerType getPlayer();
 
     int getMovement();
 
     int getHitpoints();
 
     int getDamage();
+
+    int getRange();
 
     void takeDamage(int damage);
 

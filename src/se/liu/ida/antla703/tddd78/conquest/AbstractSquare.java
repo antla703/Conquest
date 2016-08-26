@@ -7,19 +7,28 @@ import java.awt.*;
  */
 public abstract class AbstractSquare implements Square {
 
-    private Player player;
+    private PlayerType player;
     private int movement;
     private int hitpoints;
     private int damage;
+    private int range;
+    private Color color;
 
-    protected AbstractSquare(Player player, int hitpoints, int damage, int movement){
+    protected AbstractSquare(PlayerType player, int hitpoints, int damage, int movement, int range, Color color1, Color color2){
 	this.player = player;
 	this.hitpoints = hitpoints;
 	this.damage = damage;
 	this.movement = movement;
+	this.range = range;
+	if (player == PlayerType.PLAYER1){
+	    this.color = color1;
+	}
+	else{
+	    this.color = color2;
+	}
     }
 
-    @Override public Player getPlayer(){
+    @Override public PlayerType getPlayer(){
 	return player;
     }
 
@@ -35,6 +44,13 @@ public abstract class AbstractSquare implements Square {
         {
     	return this.damage;
         }
+
+    @Override public int getRange()
+            {
+        	return this.range;
+            }
+
+    @Override public Color getColor() { return this.color; }
 
     @Override public void takeDamage(int damage){
 

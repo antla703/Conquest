@@ -1,27 +1,17 @@
 package se.liu.ida.antla703.tddd78.conquest;
 
-/**
- * Represents owning player for different squares.
- */
-public enum Player
+public class Player
 {
-    /**
-     * Outside square
-     */
-    OUTSIDE,
+    public boolean battlecryUsed = false;
+    public boolean sprintUsed = false;
+    private PlayerType playerType;
 
-    /**
-     * Empty square
-     */
-    EMPTY,
+    public Player(PlayerType player)
+    {
+ 	this.playerType = player;
+    }
 
-    /**
-     * Player 1 square
-     */
-    PLAYER1,
-
-    /**
-     * Player 2 square
-     */
-    PLAYER2
+    public PlayerType getPlayerType(){
+	return this.playerType;
+    }
 }

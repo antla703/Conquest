@@ -7,23 +7,16 @@ import java.awt.*;
  */
 public class Empty extends AbstractSquare {
 
-    private Color color = Color.lightGray;
-
     public Empty(){
-	super(Player.EMPTY, 1, 0, 0);
-    }
-
-    public Color getColor(){
-	return this.color;
+	super(PlayerType.NONE, 1, 0, 0, 0, Color.lightGray, Color.lightGray);
     }
 
     @Override public void draw(final Graphics g, int x, int y) {
 
-    	g.setColor(this.color);
+    	g.setColor(this.getColor());
 	int size = ConquestComponent.getSquareSize();
     	g.fillRect(x * size, y * size, size, size);
 	g.setColor(Color.black);
 	g.drawRect(x * size, y * size, size, size);
     }
 }
-
