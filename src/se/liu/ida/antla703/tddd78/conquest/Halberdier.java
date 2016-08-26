@@ -8,7 +8,7 @@ import java.awt.*;
 public class Halberdier extends AbstractSquare {
     static int R = 11;
     public Halberdier(PlayerType player){
-	super(player, 1, 2, 3, 2, Color.GREEN, new Color(11, 156, 49));
+	super(player, 1, 2, 3, 2, Color.GREEN, new Color(11, 156, 49)); /** RGB values for a darker green*/
 
 	if (player != PlayerType.PLAYER1 && player != PlayerType.PLAYER2){
 
