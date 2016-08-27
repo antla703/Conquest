@@ -11,19 +11,17 @@ public class Board
 {
     private Square[][] squares;
     private List<BoardListener> listenerList;
-    private int outsideWidth = DEFAULT_WIDTH;
-    private int outsideHeight = DEFAULT_HEIGHT;
+    private int outsideWidth;
+    private int outsideHeight;
     private Player player1 = new Player(PlayerType.PLAYER1);
     private Player player2 = new Player(PlayerType.PLAYER2);
     private Player currentPlayer = player1;
-    private Square active = null;
+    private Square activeSquare = null;
     private Point activePos = null;
     private int activeMovement;
     private boolean selectingUnit = true;
     private CollisionHandler collisionHandler = new DefaultCollisionHandler();
-    private boolean battlecryUsedP1 = false;
-    private boolean battlecryUsedP2 = false;
-    private boolean win = false;
+    private boolean gameWon = false;
 
     /**
      * Default width for board
@@ -36,15 +34,15 @@ public class Board
     static final int DEFAULT_HEIGHT = 9;
 
     public Board() {
-	this.outsideWidth = DEFAULT_WIDTH+2;
-	this.outsideHeight = DEFAULT_HEIGHT+2;
+	this.outsideWidth = DEFAULT_WIDTH+4;
+	this.outsideHeight = DEFAULT_HEIGHT+4;
 
         this.squares = new Square[this.outsideWidth][this.outsideHeight];
         listenerList = new ArrayList<BoardListener>();
 
         for (int i = 0; i < this.outsideWidth; i++) {
             for (int j = 0; j < this.outsideHeight; j++) {
-		if (i == 0 || j == 0 || i >= this.outsideWidth-1 || j >= this.outsideHeight-1) {
+		if (i <= 1 || j <= 1 || i >= this.outsideWidth-2 || j >= this.outsideHeight-2) {
 		    squares[i][j] = new Outside();
   		}
   		else {
@@ -81,11 +79,11 @@ public class Board
     }
 
     public int getWidth() {
-        return this.squares.length-2;
+        return this.squares.length-4;
     }
 
     public int getHeight() {
-        return this.squares[0].length-2;
+        return this.squares[0].length-4;
     }
 
     public int getCurrentPlayerInt(){
@@ -99,8 +97,8 @@ public class Board
 
     }
 
-    public boolean getWin(){
-	return this.win;
+    public boolean getGameWon(){
+	return this.gameWon;
     }
 
     public Point getActivePos() {
@@ -108,7 +106,7 @@ public class Board
     }
 
     public Square getSquare(int x, int y) {
-	return this.squares[x+1][y+1];
+	return this.squares[x+2][y+2];
     }
 
     private PlayerType getPlayer(int x, int y) {
@@ -119,7 +117,7 @@ public class Board
 
     }
 
-    public void setActive(Point point){
+    public void setActiveSquare(Point point){
 
 	if (selectingUnit){
 
@@ -129,8 +127,8 @@ public class Board
 	    if (getPlayer(x, y) == this.currentPlayer.getPlayerType()){
 
 		this.activePos = point;
-		this.active = getSquare(x, y);
-		this.activeMovement = this.active.getMovement();
+		this.activeSquare = getSquare(x, y);
+		this.activeMovement = this.activeSquare.getMovement();
 		this.toggleMove();
 		System.out.println("Unit selected");
 	    }
@@ -141,7 +139,7 @@ public class Board
     }
 
     protected void setSquare(int x, int y, Square s) {
-        this.squares[x+1][y+1] = s;
+        this.squares[x+2][y+2] = s;
         this.notifyListeners();
     }
 
@@ -175,13 +173,13 @@ public class Board
 
     private boolean existsActive(){
 
-	return this.active != null;
+	return this.activeSquare != null;
 
     }
 
     public void battlecry(){
 	if (!this.currentPlayer.battlecryUsed && !this.selectingUnit){
-	    this.active.battlecry();
+	    this.activeSquare.battlecry();
 	    this.currentPlayer.battlecryUsed = true;
 	}
 
@@ -198,7 +196,7 @@ public class Board
     public void move(int xOffset, int yOffset){
 
 	if (this.existsActive() && !this.selectingUnit && !this.collisionHandler.hasCollision(xOffset, yOffset, this)){
-	    setSquare(this.activePos.x + xOffset, this.activePos.y + yOffset, active);
+	    setSquare(this.activePos.x + xOffset, this.activePos.y + yOffset, activeSquare);
 	    setSquare(this.activePos.x, this.activePos.y, new Empty());
 	    this.activePos.x += xOffset;
 	    this.activePos.y += yOffset;
@@ -221,29 +219,29 @@ public class Board
 
 	else if (!this.selectingUnit && this.existsActive()){
 	    this.selectingUnit = true;
-	    for (int i = 1; i <= active.getRange(); i++){
+	    for (int i = 1; i <= activeSquare.getRange(); i++){
 		if (this.collisionHandler.hasEnemy(i, 0, this)){
 		    Square enemy = this.getSquare(this.activePos.x + i, this.activePos.y);
-		    this.active.takeDamage(enemy.getDamage());
-		    enemy.takeDamage(this.active.getDamage());
+		    this.activeSquare.takeDamage(enemy.getDamage());
+		    enemy.takeDamage(this.activeSquare.getDamage());
 		}
 
 		else if (this.collisionHandler.hasEnemy(0, i, this)){
 		    Square enemy = this.getSquare(this.activePos.x, this.activePos.y + i);
-		    this.active.takeDamage(enemy.getDamage());
-		    enemy.takeDamage(this.active.getDamage());
+		    this.activeSquare.takeDamage(enemy.getDamage());
+		    enemy.takeDamage(this.activeSquare.getDamage());
 		}
 
 		else if (this.collisionHandler.hasEnemy(-i, 0, this)){
 		    Square enemy = this.getSquare(this.activePos.x - i, this.activePos.y);
-		    this.active.takeDamage(enemy.getDamage());
-		    enemy.takeDamage(this.active.getDamage());
+		    this.activeSquare.takeDamage(enemy.getDamage());
+		    enemy.takeDamage(this.activeSquare.getDamage());
 		}
 
 		else if (this.collisionHandler.hasEnemy(0, -i, this)){
 		    Square enemy = this.getSquare(this.activePos.x, this.activePos.y - i);
-		    this.active.takeDamage(enemy.getDamage());
-		    enemy.takeDamage(this.active.getDamage());
+		    this.activeSquare.takeDamage(enemy.getDamage());
+		    enemy.takeDamage(this.activeSquare.getDamage());
 		}
 	    }
 
@@ -264,11 +262,11 @@ public class Board
     }
 
     private void checkWin(PlayerType player){
-	this.win = true;
+	this.gameWon = true;
 	for (int i = 0; i < this.getWidth(); i++) {
 	    for (int j = 0; j < this.getHeight(); j++) {
 		if (isPlayer(i, j, player)){
-		    this.win = false;
+		    this.gameWon = false;
 		}
 	    }
 	}
@@ -290,7 +288,7 @@ public class Board
     private void clearBoard() {
 	for (int i = 0; i < outsideWidth; i++) {
 	    for (int j = 0; j < outsideHeight; j++) {
-		if (i == 0 || j == 0 || i == outsideWidth-1 || j == outsideHeight-1) {
+		if (i <= 1 || j <= 1 || i == outsideWidth-2 || j == outsideHeight-2) {
 		    squares[i][j] = new Outside();
          	}
          	else {
@@ -306,12 +304,13 @@ public class Board
 	this.spawnUnits();
 	this.selectingUnit = true;
 	this.currentPlayer = player1;
-	this.active = null;
+	this.activeSquare = null;
 	this.activePos = null;
 	this.activeMovement = 0;
 	this.player1.battlecryUsed = false;
 	this.player2.battlecryUsed = false;
 	this.player1.sprintUsed = false;
 	this.player2.sprintUsed = false;
+	this.gameWon = false;
     }
 }

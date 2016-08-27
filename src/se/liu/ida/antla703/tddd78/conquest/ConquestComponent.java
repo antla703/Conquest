@@ -39,7 +39,7 @@ public class ConquestComponent extends JComponent implements BoardListener {
 
     public void selectPoint(Point point){
 
-	this.board.setActive(point);
+	this.board.setActiveSquare(point);
 
     }
 
@@ -62,7 +62,7 @@ public class ConquestComponent extends JComponent implements BoardListener {
             }
         }
 	JLabel c = new JLabel("Current player: " + Integer.toString(board.getCurrentPlayerInt()));
-	if (board.getWin()){
+	if (board.getGameWon()){
 	    c = new JLabel("Game Over");
 	}
  	c.setBounds(0, 0, LABEL_WIDTH, LABEL_HEIGHT);

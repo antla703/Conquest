@@ -65,7 +65,7 @@ public abstract class AbstractSquare implements Square {
 
     @Override public void draw(final Graphics g, int x, int y) {
 
-    	g.setColor(this.getColor());
+    	g.setColor(this.color);
 	int size = ConquestComponent.getSquareSize();
     	g.fillRect(x * size, y * size, size, size);
 	g.setColor(Color.black);

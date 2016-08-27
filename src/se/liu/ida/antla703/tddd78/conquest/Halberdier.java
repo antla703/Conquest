@@ -6,9 +6,19 @@ import java.awt.*;
  * Halberdier type square
  */
 public class Halberdier extends AbstractSquare {
-    static int R = 11;
+
+    /** R value for a darker green*/
+    public static final int RVAL = 11;
+
+    /** G value for a darker green*/
+    public static final int GVAL = 156;
+
+    /** B value for a darker green*/
+    public static final int BVAL = 49;
+
+
     public Halberdier(PlayerType player){
-	super(player, 1, 2, 3, 2, Color.GREEN, new Color(11, 156, 49)); /** RGB values for a darker green*/
+	super(player, 1, 2, 3, 2, Color.GREEN, new Color(RVAL, GVAL, BVAL));
 
 	if (player != PlayerType.PLAYER1 && player != PlayerType.PLAYER2){
 

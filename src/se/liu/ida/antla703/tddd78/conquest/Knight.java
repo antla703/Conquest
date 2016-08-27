@@ -7,8 +7,6 @@ import java.awt.*;
  */
 public class Knight extends AbstractSquare {
 
-    private Color color;
-
     public Knight(PlayerType player){
 
 	super(player, 2, 3, 2, 1, Color.PINK, Color.RED);
